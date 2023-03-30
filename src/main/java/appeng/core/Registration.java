@@ -409,6 +409,8 @@ final class Registration {
         // Inscriber
         Upgrades.SPEED.registerItem(blocks.inscriber(), 3);
 
+        Upgrades.QUANTUM_LINK.registerItem(blocks.quantumLink(), 1);
+
         // Wireless Terminal Handler
         ArrayList<IItemDefinition> iids = new ArrayList<>();
         iids.add(items.wirelessTerminal());
@@ -418,14 +420,10 @@ final class Registration {
         for (IItemDefinition id : iids) {
             id.maybeItem().ifPresent(terminal -> {
                 registries.wireless().registerWirelessHandler((IWirelessTermHandler) terminal);
-                Upgrades.QUANTUM_LINK.registerItem(id, 1);
                 Upgrades.MAGNET.registerItem(id, 1);
             });
         }
-        items.wirelessFluidTerminal().maybeItem().ifPresent(terminal -> {
-            registries.wireless().registerWirelessHandler((IWirelessTermHandler) terminal);
-            Upgrades.QUANTUM_LINK.registerItem(items.wirelessFluidTerminal(), 1);
-        });
+        items.wirelessFluidTerminal().maybeItem().ifPresent(terminal -> registries.wireless().registerWirelessHandler((IWirelessTermHandler) terminal));
 
         // Charge Rates
         items.chargedStaff().maybeItem().ifPresent(chargedStaff -> registries.charger().addChargeRate(chargedStaff, 320d));
